@@ -1,0 +1,3 @@
+com\accolite\demo\model\Student.class
+com\accolite\demo\controller\StudentRestController.class
+com\accolite\demo\controller\StudentService.class

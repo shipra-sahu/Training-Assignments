@@ -1,0 +1,62 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop = "http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context           
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/aop 
+   			http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+   <context:annotation-config/>
+   <aop:aspectj-autoproxy/>
+ 
+  <!--  <bean id = "helloWorld" class = "com.tutorialspoint.HelloWorld">
+      <property name = "message" value = "Hello World!"/>
+   </bean> -->
+   <bean id = "a" class = "com.learning.basic.ClassA" scope="prototype"  init-method="init"
+   destroy-method="init">
+ <!--   <constructor-arg ref="b"> </constructor-arg> -->
+<!--   <property name="b" ref="b"></property> -->
+   </bean>
+   <aop:config>
+      <aop:aspect id = "log" ref = "logging">
+         <aop:pointcut id = "test" 
+            expression = "execution(* com.learning.basic.*.*(..))"/>
+         
+         <aop:before pointcut-ref = "test" method = "beforeAdvice"/>
+         <aop:after pointcut-ref = "test" method = "afterAdvice"/>
+        
+      </aop:aspect>
+   </aop:config>
+   
+ 
+ <bean id = "a2" class = "com.learning.basic.BeanPost" >
+   </bean>
+    <bean id = "b" class = "com.learning.basic.ClassB">
+   </bean>
+    <bean id = "c" class = "com.learning.basic.ClassC">
+   </bean>
+    <bean id = "b2" class = "com.learning.basic.ClassB2">
+   </bean>
+    <!-- Definition for logging aspect -->
+    <bean id = "logging" class = "com.learning.basic.Logging">
+   </bean> 
+   
+   <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+<property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+<property name="url" value="jdbc:mysql://localhost:3306/test_au" />  
+<property name="username" value="root" />  
+<property name="password" value="root" />  
+</bean>
+   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+<property name="dataSource" ref="ds"></property>  
+</bean>  
+ <bean id = "customerDao" class = "com.learning.dao.CustomerDao">
+ <property name="jTemplate" ref ="jdbcTemplate"></property>
+   </bean>
+   
+</beans>
