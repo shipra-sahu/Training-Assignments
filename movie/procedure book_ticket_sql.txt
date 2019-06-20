@@ -1,0 +1,16 @@
+delimiter $$
+create procedure bookTicket(in user_id int,in theatre_id int, in show_id int,in movie_id int,out result bool)
+begin
+declare empty_seats integer;
+declare seat_no integer;
+select count(seat_id) into empty_seats from seats where seats.booked='no' group by theatre_id,seat_id;
+if empty_seats = 0 then
+set result = false;
+else
+set result=true;
+end if;
+if result = true then
+select seat_id  into seat_no from seats where booked ='no' limit 1;
+insert into ticket(user_id,theatre_id,show_id,movie_id,seat_id,booking_date)values(user_id,theatre_id,show_id,movie_id,seat_id,now());
+end if;
+end$$

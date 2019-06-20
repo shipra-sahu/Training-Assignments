@@ -1,0 +1,10 @@
+Delimiter $$
+create procedure showBookingDetailsForUser(in user_id int)
+begin
+select u.user_name as name,t.seat_id as "seat number",th.theatre_name as "theatre name",t.booking_date as "Booking Date",m.movie_name as "movie name",s.start_time as "start time",s.end_time as "end time"
+from user u join ticket t on u.user_id=t.user_id
+join movie m on t.movie_id=m.movie_id
+join theatre th on t.theatre_id=th.theatre_id
+join shows s on t.show_id=s.show_id
+where u.user_id=user_id;
+end$$

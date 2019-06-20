@@ -1,0 +1,6 @@
+create table movie(movie_id int primary key not null auto_increment,movie_name varchar(100) not null unique, release_date date);
+create table theatre(theatre_id int primary key not null auto_increment,theatre_name varchar(100) not null,address varchar(100),num_seats int not null);
+create table shows(show_id int auto_increment,theatre_id int ,show_date date,start_time time,end_time time,movie_id int,primary key(show_id,theatre_id),foreign key(theatre_id) references theatre(theatre_id),foreign key(movie_id) references movie(movie_id)); 
+create table seats(seat_id int not null,theatre_id int not null,show_id int not null,booked varchar(3) not null,primary key(seat_id,theatre_id,show_id),foreign key(theatre_id) references theatre(theatre_id ),foreign key(show_id) references shows(show_id));
+create table user(user_id int not null primary key auto_increment,user_name varchar(100),phone varchar(13));
+create table ticket(ticket_id int not null auto_increment,theatre_id int not null,seat_id int not null,user_id int not null,booking_date date,show_id int not null,primary key(ticket_id),foreign key(theatre_id) references theatre(theatre_id),foreign key(seat_id) references seats(seat_id),foreign key(show_id) references shows(show_id),foreign key(user_id) references user(user_id));
